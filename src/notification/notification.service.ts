@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SlackDto } from './dto/slack.dto';
 import { ConfigService } from '@nestjs/config';
+import * as dayjs from 'dayjs';
 
 @Injectable()
 export class NotificationService {
@@ -15,7 +16,10 @@ export class NotificationService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          text: `${dto.entry.content}`,
+          text: `*🚨 错误通知*\n
+>*项目名称*: \`${dto.entry.projectName}\`
+>*报错内容*: \`\`\`${dto.entry.content}\`\`\`
+>*报错时间*: \`${dayjs(dto.entry.createdAt).format('YYYY-MM-DD HH:mm:ss')}\``,
         }),
       })
         .then((res) => res.text())

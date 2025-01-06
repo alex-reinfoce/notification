@@ -10,6 +10,7 @@ export class NotificationController {
 
   @Post('slack')
   create(@Body() createNotificationDto: SlackDto) {
-    return this.notificationService.slack(createNotificationDto);
+    this.notificationService.slack(createNotificationDto);
+    return 'ok';
   }
 }
