@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { SlackDto } from './dto/slack.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class NotificationService {
+  constructor(private readonly configService: ConfigService) {}
+  private readonly slackWebhookUrl = this.configService.get('SLACK_WEBHOOK_URL');
+
   slack(dto: SlackDto) {
     if (dto.event === 'entry.create' && dto.uid === 'api::log.log') {
-      fetch('https://hooks.slack.com/services/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', {
+      fetch(this.slackWebhookUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -15,6 +19,9 @@ export class NotificationService {
         }),
       })
         .then((res) => res.text())
+        .then((res) => {
+          console.log(res);
+        })
         .catch((err) => {
           console.error(err);
         });
