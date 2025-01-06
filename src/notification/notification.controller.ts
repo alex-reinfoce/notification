@@ -1,8 +1,10 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { NotificationService } from './notification.service';
 import { SlackDto } from './dto/slack.dto';
+import { TokenGuard } from './guards/token.guard';
 
 @Controller('notification')
+@UseGuards(TokenGuard)
 export class NotificationController {
   constructor(private readonly notificationService: NotificationService) {}
 
