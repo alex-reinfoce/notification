@@ -8,7 +8,7 @@ export class NotificationService {
   private readonly slackWebhookUrl = this.configService.get('SLACK_WEBHOOK_URL');
 
   slack(dto: SlackDto) {
-    if (dto.event === 'entry.create' && dto.uid === 'api::log.log') {
+    if (dto.event === 'entry.create' && dto.uid === 'api::log.log' && dto.entry.level === 'error') {
       fetch(this.slackWebhookUrl, {
         method: 'POST',
         headers: {
