@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SlackDto } from './dto/slack.dto';
 import { ConfigService } from '@nestjs/config';
-import * as dayjs from 'dayjs';
+import  dayjs from 'dayjs';
 
 @Injectable()
 export class NotificationService {
